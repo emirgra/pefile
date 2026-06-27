@@ -1087,9 +1087,7 @@ class Structure:
     def dump_dict(self):
         """Returns a dictionary representation of the structure."""
 
-        dump_dict = {}
-
-        dump_dict["Structure"] = self.name
+        dump_dict = {"Structure": self.name}
 
         # Refer to the set_format method for an explanation
         # of the following construct.
@@ -7197,20 +7195,17 @@ class PE:
 
                             for resource_lang in resource_id.directory.entries:
                                 if hasattr(resource_lang, "data"):
-                                    resource_lang_dict = {}
-                                    resource_lang_dict["LANG"] = resource_lang.data.lang
-                                    resource_lang_dict[
-                                        "SUBLANG"
-                                    ] = resource_lang.data.sublang
-                                    resource_lang_dict["LANG_NAME"] = LANG.get(
-                                        resource_lang.data.lang, "*unknown*"
-                                    )
-                                    resource_lang_dict[
-                                        "SUBLANG_NAME"
-                                    ] = get_sublang_name_for_lang(
-                                        resource_lang.data.lang,
-                                        resource_lang.data.sublang,
-                                    )
+                                    resource_lang_dict = {
+                                        "LANG": resource_lang.data.lang,
+                                        "SUBLANG": resource_lang.data.sublang,
+                                        "LANG_NAME": LANG.get(
+                                            resource_lang.data.lang, "*unknown*"
+                                        ),
+                                        "SUBLANG_NAME": get_sublang_name_for_lang(
+                                            resource_lang.data.lang,
+                                            resource_lang.data.sublang,
+                                        ),
+                                    }
                                     resource_lang_dict.update(
                                         resource_lang.struct.dump_dict()
                                     )
