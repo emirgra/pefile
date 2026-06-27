@@ -7208,7 +7208,7 @@ class PE:
                                         "SUBLANG_NAME": get_sublang_name_for_lang(
                                             resource_lang.data.lang,
                                             resource_lang.data.sublang,
-                                        )
+                                        ),
                                     }
                                     resource_lang_dict.update(
                                         resource_lang.struct.dump_dict()
