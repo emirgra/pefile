@@ -2944,7 +2944,7 @@ class PE:
         fast_load = fast_load if fast_load is not None else globals()["fast_load"]
         try:
             self.__parse__(name, data, fast_load, max_offset)
-        except:
+        except Exception:
             self.close()
             raise
 
@@ -4881,7 +4881,7 @@ class PE:
 
                 try:
                     version_entries = last_entry.directory.entries[0].directory.entries
-                except:
+                except (AttributeError, IndexError):
                     # Maybe a malformed directory structure...?
                     # Let's ignore it
                     pass
