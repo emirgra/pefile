@@ -4890,7 +4890,7 @@ class PE:
                         rt_version_struct = None
                         try:
                             rt_version_struct = version_entry.data.struct
-                        except:
+                        except (AttributeError, IndexError):
                             # Maybe a malformed directory structure...?
                             # Let's ignore it
                             pass
