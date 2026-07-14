@@ -3116,12 +3116,12 @@ class PE:
             self.__data__[nt_headers_offset + 4 : nt_headers_offset + 4 + 32],
             file_offset=nt_headers_offset + 4,
         )
-        image_flags = retrieve_flags(IMAGE_CHARACTERISTICS, "IMAGE_FILE_")
 
         if not self.FILE_HEADER:
             raise PEFormatError("File Header missing")
 
         # Set the image's flags according to the Characteristics member
+        image_flags = retrieve_flags(IMAGE_CHARACTERISTICS, "IMAGE_FILE_")
         set_flags(self.FILE_HEADER, self.FILE_HEADER.Characteristics, image_flags)
 
         optional_header_offset = nt_headers_offset + 4 + self.FILE_HEADER.sizeof()
@@ -3131,7 +3131,7 @@ class PE:
 
         self.OPTIONAL_HEADER = self.__unpack_data__(
             self.__IMAGE_OPTIONAL_HEADER_format__,
-            # Read up to 256 bytes to allow creating a copy of too much data
+            # Read up to 256 bytes to avoid copying too much data
             self.__data__[optional_header_offset : optional_header_offset + 256],
             file_offset=optional_header_offset,
         )
@@ -3153,8 +3153,6 @@ class PE:
         ):
             # Add enough zeros to make up for the unused fields
             padding_length = 128
-
-            # Create padding
             padded_data = self.__data__[
                 optional_header_offset : optional_header_offset + 0x200
             ] + (b"\0" * padding_length)
@@ -3200,6 +3198,7 @@ class PE:
                     padded_data = self.__data__[
                         optional_header_offset : optional_header_offset + 0x200
                     ] + (b"\0" * padding_length)
+
                     self.OPTIONAL_HEADER = self.__unpack_data__(
                         self.__IMAGE_OPTIONAL_HEADER64_format__,
                         padded_data,
