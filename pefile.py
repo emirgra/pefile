@@ -1300,7 +1300,8 @@ class SectionStructure(Structure):
         if sha512 is not None:
             return sha512(self.get_data()).hexdigest()
 
-    def entropy_H(self, data):
+    @staticmethod
+    def entropy_H(data):
         """Calculate the entropy of a chunk of data."""
         if not data:
             return 0.0
@@ -6447,7 +6448,8 @@ class PE:
             return self.get_string_from_data(0, self.__data__[rva : rva + max_length])
         return self.get_string_from_data(0, s.get_data(rva, length=max_length))
 
-    def get_bytes_from_data(self, offset, data):
+    @staticmethod
+    def get_bytes_from_data(offset, data):
         """."""
         if offset > len(data):
             return b""
@@ -7278,11 +7280,13 @@ class PE:
     # Double-Word get / set
     ##
 
-    def get_data_from_dword(self, dword):
+    @staticmethod
+    def get_data_from_dword(dword):
         """Return a four byte string representing the double word value (little endian)."""
         return struct.pack("<L", dword & 0xFFFFFFFF)
 
-    def get_dword_from_data(self, data, offset):
+    @staticmethod
+    def get_dword_from_data(data, offset):
         """Convert four bytes of data to a double word (little endian)
 
         'offset' is assumed to index into a dword array. So setting it to
@@ -7328,11 +7332,13 @@ class PE:
     # Word get / set
     ##
 
-    def get_data_from_word(self, word):
+    @staticmethod
+    def get_data_from_word(word):
         """Return a two byte string representing the word value. (little endian)."""
         return struct.pack("<H", word)
 
-    def get_word_from_data(self, data, offset):
+    @staticmethod
+    def get_word_from_data(data, offset):
         """Convert two bytes of data to a word (little endian)
 
         'offset' is assumed to index into a word array. So setting it to
@@ -7378,11 +7384,13 @@ class PE:
     # Quad-Word get / set
     ##
 
-    def get_data_from_qword(self, word):
+    @staticmethod
+    def get_data_from_qword(word):
         """Return an eight byte string representing the quad-word value (little endian)."""
         return struct.pack("<Q", word)
 
-    def get_qword_from_data(self, data, offset):
+    @staticmethod
+    def get_qword_from_data(data, offset):
         """Convert eight bytes of data to a word (little endian)
 
         'offset' is assumed to index into a word array. So setting it to
